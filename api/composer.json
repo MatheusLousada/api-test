@@ -1,0 +1,17 @@
+{
+    "name": "mathe/api",
+    "autoload": {
+        "psr-4": {
+            "App\\": "App/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Matheus Carvalho Lousada",
+            "email": "matheusclousada@gmail.com"
+        }
+    ],
+    "require": {
+        "firebase/php-jwt": "^6.4"
+    }
+}
