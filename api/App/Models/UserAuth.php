@@ -55,10 +55,6 @@ class UserAuth extends Model
 
         $dao = new UserAuthDAO($this->getConnection());
 
-        http_response_code(200);
-        echo json_encode(["login" => 'depois do get connection']);
-        exit;
-
         $userAuth = $dao->getByEmail($this->email);
         if ($userAuth) {
 
