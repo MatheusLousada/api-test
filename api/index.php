@@ -6,8 +6,8 @@
 
 require_once(".vendor/autoload.php");
 ini_set('display_errors', 'off');
+echo('oi');
+// use App\Core\Router;
 
-use App\Core\Router;
-
-$router = new Router();
-$router->run();
+// $router = new Router();
+// $router->run();
