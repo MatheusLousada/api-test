@@ -9,6 +9,11 @@ class DB
     public function __construct()
     {
         $this->conn = new \mysqli("containers-us-west-20.railway.app", "root", "railway", "7090");
+
+        http_response_code(200);
+        echo json_encode(["con" => $this->conn]);
+        exit;
+
         if ($this->conn->connect_error) {
             http_response_code(500);
             echo json_encode(["error" => 'Connection failed']);
