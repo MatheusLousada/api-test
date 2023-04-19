@@ -1,4 +1,4 @@
-FallbackResource /index.php
+FallbackResource index.php
 Header set Access-Control-Allow-Origin "*"
 php_value display_errors 1
 
