@@ -11,7 +11,7 @@ class HttpRequest
     public function __construct()
     {
         $this->method = $_SERVER['REQUEST_METHOD'];
-        $this->uri = $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        $this->uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $this->body = json_decode(file_get_contents('php://input'), true);
     }
 
