@@ -123,16 +123,20 @@ class Router
         //     exit;
         // }
 
-        $this->handleRequest();
+        http_response_code(404);
+        echo json_encode(["error" => "testando"]);
+        exit;
 
-        if (file_exists("App/Controllers/" .  $this->route['controller'] . ".php")) {
-            require_once "App/Controllers/" . $this->route['controller'] . ".php";
-            $controller = new $this->route['controller']();
-            call_user_func_array([$controller, $this->route['method']], [$this->request]);
-        } else {
-            http_response_code(404);
-            echo json_encode(["error" => "Resource not found"]);
-            exit;
-        }
+        // $this->handleRequest();
+
+        // if (file_exists("App/Controllers/" .  $this->route['controller'] . ".php")) {
+        //     require_once "App/Controllers/" . $this->route['controller'] . ".php";
+        //     $controller = new $this->route['controller']();
+        //     call_user_func_array([$controller, $this->route['method']], [$this->request]);
+        // } else {
+        //     http_response_code(404);
+        //     echo json_encode(["error" => "Resource not found"]);
+        //     exit;
+        // }
     }
 }
