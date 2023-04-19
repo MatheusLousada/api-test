@@ -78,6 +78,10 @@ class UserAuth extends Model
             "password" => $this->password
         ];
 
+        http_response_code(200);
+        echo json_encode(["login" => 'veio aqui antes do jwt']);
+        exit;
+
         $jwt = JWT::encode($payload, $key, 'HS256');
         $this->token = $jwt;
         $userAuthenticationCreated = $dao->create($this);
