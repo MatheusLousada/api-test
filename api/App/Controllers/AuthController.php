@@ -19,6 +19,9 @@ class AuthController
 
     public function login(): array
     {
+        http_response_code(200);
+        echo json_encode(["login" => 'veio aqui auth contoller']);
+        exit;
         $userAuth = new UserAuth($this->email, $this->password);
         return $userAuth->login();
     }
