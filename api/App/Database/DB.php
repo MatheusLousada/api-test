@@ -8,7 +8,7 @@ class DB
 
     public function __construct()
     {
-        $this->conn = new \mysqli("localhost", "epiz_34025363", "eJEUeD6tNpK", "epiz_34025363_test");
+        $this->conn = new \mysqli("containers-us-west-20.railway.app", "root", "railway", "7090");
         if ($this->conn->connect_error) {
             die("Connection failed: " . $this->conn->connect_error);
         }

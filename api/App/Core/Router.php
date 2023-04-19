@@ -90,53 +90,49 @@ class Router
         return false;
     }
 
-    // private function validateBody(): void
-    // {
-    //     if (empty($this->request['body']) || $this->request['body'] == NULL) {
-    //         http_response_code(400);
-    //         echo json_encode(["error" => "Invalid request body"]);
-    //         exit;
-    //     }
+    private function validateBody(): void
+    {
+        if (empty($this->request['body']) || $this->request['body'] == NULL) {
+            http_response_code(400);
+            echo json_encode(["error" => "Invalid request body"]);
+            exit;
+        }
 
-    //     $schemaFileName = ucfirst($this->context) . 'Schema';
-    //     if (file_exists("App/Schemas/" .  $schemaFileName . ".php")) {
-    //         require_once "App/Schemas/" . $schemaFileName . ".php";
-    //         $schema = new  $schemaFileName($this->request['body']);
-    //         $validated = $schema->validate();
-    //         if ($validated !== true) {
-    //             echo json_encode(["response" => $validated]);
-    //             exit;
-    //         }
-    //     } else {
-    //         http_response_code(404);
-    //         echo json_encode(["error" => "Resource not found"]);
-    //         exit;
-    //     }
-    // }
+        $schemaFileName = ucfirst($this->context) . 'Schema';
+        if (file_exists("App/Schemas/" .  $schemaFileName . ".php")) {
+            require_once "App/Schemas/" . $schemaFileName . ".php";
+            $schema = new  $schemaFileName($this->request['body']);
+            $validated = $schema->validate();
+            if ($validated !== true) {
+                echo json_encode(["response" => $validated]);
+                exit;
+            }
+        } else {
+            http_response_code(404);
+            echo json_encode(["error" => "Resource not found"]);
+            exit;
+        }
+    }
 
     public function run(): void
     {
-        // $responseAuth = $this->auth();
-        // if (!$responseAuth['success']) {
-        //     http_response_code($responseAuth['status']);
-        //     echo json_encode(["error" => 'Unauthorized. ' . $responseAuth['msg']]);
-        //     exit;
-        // }
+        $responseAuth = $this->auth();
+        if (!$responseAuth['success']) {
+            http_response_code($responseAuth['status']);
+            echo json_encode(["error" => 'Unauthorized. ' . $responseAuth['msg']]);
+            exit;
+        }
 
-        http_response_code(404);
-        echo json_encode(["error" => "testando"]);
-        exit;
+        $this->handleRequest();
 
-        // $this->handleRequest();
-
-        // if (file_exists("App/Controllers/" .  $this->route['controller'] . ".php")) {
-        //     require_once "App/Controllers/" . $this->route['controller'] . ".php";
-        //     $controller = new $this->route['controller']();
-        //     call_user_func_array([$controller, $this->route['method']], [$this->request]);
-        // } else {
-        //     http_response_code(404);
-        //     echo json_encode(["error" => "Resource not found"]);
-        //     exit;
-        // }
+        if (file_exists("App/Controllers/" .  $this->route['controller'] . ".php")) {
+            require_once "App/Controllers/" . $this->route['controller'] . ".php";
+            $controller = new $this->route['controller']();
+            call_user_func_array([$controller, $this->route['method']], [$this->request]);
+        } else {
+            http_response_code(404);
+            echo json_encode(["error" => "Resource not found"]);
+            exit;
+        }
     }
 }
