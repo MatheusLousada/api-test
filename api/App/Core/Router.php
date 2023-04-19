@@ -66,6 +66,11 @@ class Router
     private function auth(): mixed
     {
         if ($this->context == 'login') {
+
+            http_response_code(200);
+            echo json_encode(["login" => 'caiu aqui']);
+            exit;
+
             list("email" => $email, "password" => $password) = $this->request["body"];
             $auth = new AuthController($email, $password);
             $responseAuth = $auth->login();

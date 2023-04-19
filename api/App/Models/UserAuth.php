@@ -52,6 +52,7 @@ class UserAuth extends Model
 
     public function login()
     {
+
         $dao = new UserAuthDAO($this->getConnection());
         $userAuth = $dao->getByEmail($this->email);
         if ($userAuth) {
