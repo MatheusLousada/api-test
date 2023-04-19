@@ -99,8 +99,8 @@ class Router
         }
 
         $schemaFileName = ucfirst($this->context) . 'Schema';
-        if (file_exists("../App/Schemas/" .  $schemaFileName . ".php")) {
-            require_once "../App/Schemas/" . $schemaFileName . ".php";
+        if (file_exists("App/Schemas/" .  $schemaFileName . ".php")) {
+            require_once "App/Schemas/" . $schemaFileName . ".php";
             $schema = new  $schemaFileName($this->request['body']);
             $validated = $schema->validate();
             if ($validated !== true) {
@@ -125,8 +125,8 @@ class Router
 
         $this->handleRequest();
 
-        if (file_exists("../App/Controllers/" .  $this->route['controller'] . ".php")) {
-            require_once "../App/Controllers/" . $this->route['controller'] . ".php";
+        if (file_exists("App/Controllers/" .  $this->route['controller'] . ".php")) {
+            require_once "App/Controllers/" . $this->route['controller'] . ".php";
             $controller = new $this->route['controller']();
             call_user_func_array([$controller, $this->route['method']], [$this->request]);
         } else {
