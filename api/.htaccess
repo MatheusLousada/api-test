@@ -1,9 +1,5 @@
+FallbackResource /index.php
 Header set Access-Control-Allow-Origin "*"
-
-RewriteEngine On
-RewriteBase /api/
-RewriteRule ^(.*)$ ../api/index.php [L]
-
 php_value display_errors 1
 
 
