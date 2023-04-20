@@ -9,7 +9,7 @@ class DB
     public function __construct()
     {
         try {
-            $this->conn = new \mysqli("containers-us-west-20.railway.app", "root", "edbNCXlqmZ8NXQGqYgps", "7090");
+            $this->conn = new \mysqli("containers-us-west-12.railway.app", "root", "Z0YFpjMHB4cmAXH5dj6c", "7535");
         } catch (\Throwable $th) {
             http_response_code(500);
             echo json_encode(["error" => $th]);
