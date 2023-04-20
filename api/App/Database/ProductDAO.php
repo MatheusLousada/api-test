@@ -44,9 +44,11 @@ class ProductDAO
                 products.type_id,
                 GROUP_CONCAT(product_attributes.attribute_id) AS attributes_id
             FROM products
-            LEFT JOIN product_attributes ON
+            LEFT JOIN product_attributes ON 
                 product_attributes.product_sku = products.sku
-            GROUP BY products.sku'
+            GROUP BY 
+                products.id, products.sku, products.name, products.price, products.type_id
+            '
             );
 
             $stmt->execute();
