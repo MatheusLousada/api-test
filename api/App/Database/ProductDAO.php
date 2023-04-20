@@ -44,6 +44,10 @@ class ProductDAO
         );
 
         $stmt->execute();
+
+        http_response_code(404);
+        return "executou";
+
         $results = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
         foreach ($results as $result) {
             $type = Type::getById($result['type_id']);
