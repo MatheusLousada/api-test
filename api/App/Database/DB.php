@@ -8,19 +8,25 @@ class DB
 
     public function __construct()
     {
-        try {
-            $this->conn = new \mysqli("containers-us-west-12.railway.app", "root", "Z0YFpjMHB4cmAXH5dj6c", "7535");
-        } catch (\Throwable $th) {
-            http_response_code(500);
-            echo json_encode(["error" => $th]);
-            exit;
+
+        $servername = "containers-us-west-20.railway.app";
+        $username = "root";
+        $password = "edbNCXlqmZ8NXQGqYgps";
+        $port = 7090;
+        $protocol = "TCP";
+
+        $conn = mysqli_connect($servername, $username, $password, "", $port, $protocol);
+        if (!$conn) {
+            die("Falha na conexão: " . mysqli_connect_error());
         }
 
-        if ($this->conn->connect_errno) {
-            http_response_code(500);
-            echo json_encode(["error" => 'Connection failed: ' + $this->conn->connect_error]);
-            exit;
-        }
+        echo "Conexão bem sucedida";
+
+        // if ($this->conn->connect_errno) {
+        //     http_response_code(500);
+        //     echo json_encode(["error" => 'Connection failed: ' + $this->conn->connect_error]);
+        //     exit;
+        // }
     }
 
     public function setAutoCommit($value)
