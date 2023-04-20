@@ -23,7 +23,9 @@ class ProductsController
 
     public function index()
     {
-        echo json_encode(Product::getAll(), JSON_UNESCAPED_UNICODE);
+        // echo json_encode(Product::getAll(), JSON_UNESCAPED_UNICODE);
+        // exit;
+        echo json_encode('tessttando', JSON_UNESCAPED_UNICODE);
         exit;
     }
 
