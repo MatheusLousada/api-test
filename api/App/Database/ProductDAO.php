@@ -28,6 +28,11 @@ class ProductDAO
 
     public function getAll(): array
     {
+
+        http_response_code(404);
+        echo json_encode('aqui chegou ao menos', JSON_UNESCAPED_UNICODE);
+        exit;
+
         $products = array();
         $stmt = $this->db->prepare(
             'SELECT 
@@ -44,9 +49,6 @@ class ProductDAO
         );
 
         $stmt->execute();
-
-        http_response_code(404);
-        return "executou";
 
         $results = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
         foreach ($results as $result) {
