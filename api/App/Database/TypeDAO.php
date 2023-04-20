@@ -15,10 +15,14 @@ class TypeDAO
 
     public function getById(int $id): mixed
     {
-        $stmt = $this->db->prepare('SELECT * FROM types WHERE id = ?');
-        $stmt->bind_param('i', $id);
-        $stmt->execute();
-        $result = $stmt->get_result()->fetch_assoc();
-        return $result ? new Type($result['id'], $result['description']) : null;
+        try {
+            $stmt = $this->db->prepare('SELECT * FROM types WHERE id = ?');
+            $stmt->bind_param('i', $id);
+            $stmt->execute();
+            $result = $stmt->get_result()->fetch_assoc();
+            return $result ? new Type($result['id'], $result['description']) : null;
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
     }
 }

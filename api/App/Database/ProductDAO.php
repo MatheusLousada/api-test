@@ -18,21 +18,20 @@ class ProductDAO
 
     public function getById(int $id): mixed
     {
-        $stmt = $this->db->prepare('SELECT * FROM products WHERE id = ?');
-        $stmt->bind_param('i', $id);
-        $stmt->execute();
-        $result = $stmt->get_result()->fetch_assoc();
-        $type = Type::getById($result['type_id']);
-        return $result ? new Product($result['sku'], $result['name'], $result['price'], $type, $result['id']) : null;
+        try {
+            $stmt = $this->db->prepare('SELECT * FROM products WHERE id = ?');
+            $stmt->bind_param('i', $id);
+            $stmt->execute();
+            $result = $stmt->get_result()->fetch_assoc();
+            $type = Type::getById($result['type_id']);
+            return $result ? new Product($result['sku'], $result['name'], $result['price'], $type, $result['id']) : null;
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
     }
 
     public function getAll(): array
     {
-
-        http_response_code(404);
-        echo json_encode('aqui chegou ao menos', JSON_UNESCAPED_UNICODE);
-        exit;
-
         try {
 
             $products = array();
@@ -94,9 +93,9 @@ class ProductDAO
 
     public function save(ProductAbstract $product): mixed
     {
-        $stmt = $this->db->prepare('INSERT INTO products (sku, name, price, type_id) VALUES (?, ?, ?, ?)');
-        $stmt->bind_param('ssdi', $product->getSku(), $product->getName(), $product->getPrice(), $product->getType()->getId());
         try {
+            $stmt = $this->db->prepare('INSERT INTO products (sku, name, price, type_id) VALUES (?, ?, ?, ?)');
+            $stmt->bind_param('ssdi', $product->getSku(), $product->getName(), $product->getPrice(), $product->getType()->getId());
             $stmt->execute();
             $product->setId($this->db->insert_id);
             return $product;
@@ -108,9 +107,9 @@ class ProductDAO
 
     public function delete(ProductAbstract $product): mixed
     {
-        $stmt = $this->db->prepare('DELETE FROM products WHERE id = ?');
-        $stmt->bind_param('i', $product->getId());
         try {
+            $stmt = $this->db->prepare('DELETE FROM products WHERE id = ?');
+            $stmt->bind_param('i', $product->getId());
             $stmt->execute();
             return true;
         } catch (\Exception $e) {
