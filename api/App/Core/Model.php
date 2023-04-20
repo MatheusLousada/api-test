@@ -12,13 +12,13 @@ class Model
     {
         if (!isset(self::$connection)) {
 
-            $db = new DB();
+            // $db = new DB();
 
             http_response_code(200);
             echo json_encode(["login" => 'aqui indentro']);
             exit;
 
-            self::$connection = $db->getConnection();
+            // self::$connection = $db->getConnection();
         }
 
         return self::$connection;
