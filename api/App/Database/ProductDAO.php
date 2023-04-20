@@ -48,8 +48,8 @@ class ProductDAO
         foreach ($results as $result) {
             $type = Type::getById($result['type_id']);
             $dinamycProduct = 'Product' . ucfirst(strtolower($type->getDescription()));
-            if (file_exists("../App/Models/" .  $dinamycProduct . ".php")) {
-                require_once "../App/Models/" . $dinamycProduct . ".php";
+            if (file_exists("App/Models/" .  $dinamycProduct . ".php")) {
+                require_once "App/Models/" . $dinamycProduct . ".php";
                 $dinamycProduct = "App\Models\\" . $dinamycProduct;
 
                 $attributes = array();

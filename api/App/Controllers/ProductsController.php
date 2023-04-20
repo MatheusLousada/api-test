@@ -23,9 +23,7 @@ class ProductsController
 
     public function index()
     {
-        // echo json_encode(Product::getAll(), JSON_UNESCAPED_UNICODE);
-        // exit;
-        echo json_encode('tessttando', JSON_UNESCAPED_UNICODE);
+        echo json_encode(Product::getAll(), JSON_UNESCAPED_UNICODE);
         exit;
     }
 
@@ -37,7 +35,7 @@ class ProductsController
 
         $this->product = new Product($sku, $name, $price, $type);
         $this->dinamycProduct = 'Product' . ucfirst(strtolower($this->product->getType()->getDescription()));
-        if (file_exists("../App/Models/" .  $this->dinamycProduct . ".php")) {
+        if (file_exists("App/Models/" .  $this->dinamycProduct . ".php")) {
 
             $this->db->setAutoCommit(false);
             $this->initConnection();
@@ -81,7 +79,7 @@ class ProductsController
 
     private function saveProduct()
     {
-        require_once "../App/Models/" . $this->dinamycProduct . ".php";
+        require_once "App/Models/" . $this->dinamycProduct . ".php";
         $dinamycProductModel = "App\Models\\" . $this->dinamycProduct;
         $product = new $dinamycProductModel($this->product->getSku(), $this->product->getName(), $this->product->getPrice(), $this->product->getType());
         $product->setConnection($this->con);
