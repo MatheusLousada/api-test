@@ -5,7 +5,7 @@
 // header("Access-Control-Allow-Headers", "Accept, Content-Type, Authorization");
 
 require_once("vendor/autoload.php");
-ini_set('display_errors', 'off');
+ini_set('display_errors', 'on');
 
 use App\Core\Router;
 
