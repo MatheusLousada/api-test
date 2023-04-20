@@ -31,7 +31,7 @@ class Router
                 return $this->get();
                 break;
             case 'POST':
-                // $this->validateBody();
+                $this->validateBody();
                 return $this->post();
                 break;
             case 'DELETE':
