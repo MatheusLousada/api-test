@@ -15,18 +15,22 @@ class UserAuthDAO
 
     public function getByEmail(string $email): mixed
     {
-        $stmt = $this->db->prepare('SELECT * FROM users_authetications WHERE email = ?');
-        $stmt->bind_param('s', $email);
-        $stmt->execute();
-        $result = $stmt->get_result()->fetch_assoc();
-        return $result ? new UserAuth($result['email'], $result['password'], $result['token']) : null;
+        try {
+            $stmt = $this->db->prepare('SELECT * FROM users_authetications WHERE email = ?');
+            $stmt->bind_param('s', $email);
+            $stmt->execute();
+            $result = $stmt->get_result()->fetch_assoc();
+            return $result ? new UserAuth($result['email'], $result['password'], $result['token']) : null;
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     public function create(UserAuth $authentication): mixed
     {
-        $stmt = $this->db->prepare('INSERT INTO users_authetications (email, password, token) VALUES (?, ?, ?)');
-        $stmt->bind_param('sss', $authentication->getEmail(), $authentication->getPassword(), $authentication->getToken());
         try {
+            $stmt = $this->db->prepare('INSERT INTO users_authetications (email, password, token) VALUES (?, ?, ?)');
+            $stmt->bind_param('sss', $authentication->getEmail(), $authentication->getPassword(), $authentication->getToken());
             $stmt->execute();
             return true;
         } catch (\Exception $e) {
