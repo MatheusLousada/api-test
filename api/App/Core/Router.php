@@ -71,7 +71,11 @@ class Router
             $auth = new AuthController($email, $password);
             $responseAuth = $auth->login();
 
-            http_response_code(500);
+            http_response_code($responseAuth['status']);
+
+            header('Content-Type: application/json');
+            header('Access-Control-Allow-Origin: *');
+            header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept');
 
             if ($responseAuth['success'] == true) {
                 echo json_encode(["token" => $responseAuth['token']]);
