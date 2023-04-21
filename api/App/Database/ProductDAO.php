@@ -33,8 +33,8 @@ class ProductDAO
     public function getBySku(string $sku): mixed
     {
         try {
-            $stmt = $this->db->prepare('SELECT * FROM products WHERE id = ?');
-            $stmt->bind_param('i', $sku);
+            $stmt = $this->db->prepare('SELECT * FROM products WHERE sku = ?');
+            $stmt->bind_param('s', $sku);
             $stmt->execute();
             $result = $stmt->get_result()->fetch_assoc();
             $type = Type::getById($result['type_id']);
