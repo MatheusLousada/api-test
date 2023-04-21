@@ -2,7 +2,9 @@
 
 namespace App\Database;
 
+use App\Models\Product;
 use App\Models\ProductAttribute;
+use App\Models\Attribute;
 
 class ProductAttributeDAO
 {
@@ -11,6 +13,21 @@ class ProductAttributeDAO
     public function __construct(\mysqli $db)
     {
         $this->db = $db;
+    }
+
+    public function getById(int $id): mixed
+    {
+        try {
+            $stmt = $this->db->prepare('SELECT * FROM product_attributes WHERE id = ?');
+            $stmt->bind_param('i', $id);
+            $stmt->execute();
+            $result = $stmt->get_result()->fetch_assoc();
+            $product = Product::getBySku($result['product_sku']);
+            $attribute = Attribute::getById($result['attribute_id']);
+            return $result ? new ProductAttribute($product, $attribute, $result['value'], $result['id']) : null;
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
     }
 
     public function save(ProductAttribute $productAtributte): mixed

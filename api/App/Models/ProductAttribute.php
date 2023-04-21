@@ -73,4 +73,10 @@ class ProductAttribute extends Model
         $dao = new ProductAttributeDAO($this->getConnection());
         return $dao->delete($this);
     }
+
+    public static function getById(int $id): ProductAttribute
+    {
+        $dao = new ProductAttributeDAO(Model::getConnection());
+        return $dao->getById($id);
+    }
 }

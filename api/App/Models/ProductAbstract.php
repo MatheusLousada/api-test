@@ -78,6 +78,12 @@ abstract class ProductAbstract extends Model
         return $dao->getById($id);
     }
 
+    public static function getBySku(string $sku): Product
+    {
+        $dao = new ProductDAO(Model::getConnection());
+        return $dao->getBySku($sku);
+    }
+
     public static function getAll(): array
     {
         $dao = new ProductDAO(Model::getConnection());

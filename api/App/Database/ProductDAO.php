@@ -5,7 +5,7 @@ namespace App\Database;
 use App\Models\ProductAbstract;
 use App\Models\Product;
 use App\Models\Type;
-use App\Models\Attribute;
+use App\Models\ProductAttribute;
 
 class ProductDAO
 {
@@ -30,6 +30,20 @@ class ProductDAO
         }
     }
 
+    public function getBySku(string $sku): mixed
+    {
+        try {
+            $stmt = $this->db->prepare('SELECT * FROM products WHERE id = ?');
+            $stmt->bind_param('i', $sku);
+            $stmt->execute();
+            $result = $stmt->get_result()->fetch_assoc();
+            $type = Type::getById($result['type_id']);
+            return $result ? new Product($result['sku'], $result['name'], $result['price'], $type, $result['id']) : null;
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+
     public function getAll(): array
     {
         try {
@@ -37,17 +51,17 @@ class ProductDAO
             $products = array();
             $stmt = $this->db->prepare(
                 'SELECT 
-                products.id,
-                products.sku,
-                products.name,
-                products.price,
-                products.type_id,
-                GROUP_CONCAT(product_attributes.attribute_id) AS attributes_id
-            FROM products
-            LEFT JOIN product_attributes ON 
-                product_attributes.product_sku = products.sku
-            GROUP BY 
-                products.id, products.sku, products.name, products.price, products.type_id
+                    products.id,
+                    products.sku,
+                    products.name,
+                    products.price,
+                    products.type_id,
+                    GROUP_CONCAT(product_attributes.id) AS product_attributes_id
+                FROM products
+                LEFT JOIN product_attributes ON 
+                    product_attributes.product_sku = products.sku
+                GROUP BY 
+                    products.id, products.sku, products.name, products.price, products.type_id
             '
             );
 
@@ -61,13 +75,16 @@ class ProductDAO
                     $dinamycProduct = "App\Models\\" . $dinamycProduct;
 
                     $attributes = array();
-                    $attributes_ids = explode(',', $result['attributes_id']);
-                    if (!empty($attributes_ids[0])) {
-                        foreach ($attributes_ids as $attribute_id) {
-                            $attribute = Attribute::getById($attribute_id);
+                    $product_attributes_ids = explode(',', $result['product_attributes_id']);
+                    if (!empty($product_attributes_ids[0])) {
+                        foreach ($product_attributes_ids as $product_attributes_id) {
+
+                            $productAttribute = ProductAttribute::getById($product_attributes_id);
+
                             $attributes[] = [
-                                'description' => $attribute->getDescription(),
-                                'measurement_unit' => $attribute->getMensurementUnit()->getSymbol()
+                                'description' => $productAttribute->getAttribute()->getDescription(),
+                                'value' => $productAttribute->getValue(),
+                                'measurement_unit' => $productAttribute->getAttribute()->getMensurementUnit()->getSymbol()
                             ];
                         }
                     }
