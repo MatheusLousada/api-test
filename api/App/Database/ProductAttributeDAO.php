@@ -16,8 +16,12 @@ class ProductAttributeDAO
     public function save(ProductAttribute $productAtributte): mixed
     {
         try {
+            $sku = $productAtributte->getProduct()->getSku();
+            $productId = $productAtributte->getAttribute()->getId();
+            $value = $productAtributte->getValue();
+
             $stmt = $this->db->prepare('INSERT INTO product_attributes (product_sku, attribute_id, value) VALUES (?, ?, ?)');
-            $stmt->bind_param('sid', $productAtributte->getProduct()->getSku(),  $productAtributte->getAttribute()->getId(), $productAtributte->getValue());
+            $stmt->bind_param('sid', $sku,  $productId, $value);
             $stmt->execute();
             $productAtributte->setId($this->db->insert_id);
             return $productAtributte->getId();

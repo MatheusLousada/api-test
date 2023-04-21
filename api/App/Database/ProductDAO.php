@@ -96,8 +96,14 @@ class ProductDAO
     public function save(ProductAbstract $product): mixed
     {
         try {
+
+            $sku = $product->getSku();
+            $name = $product->getName();
+            $price = $product->getPrice();
+            $typeId = $product->getType()->getId();
+
             $stmt = $this->db->prepare('INSERT INTO products (sku, name, price, type_id) VALUES (?, ?, ?, ?)');
-            $stmt->bind_param('ssdi', $product->getSku(), $product->getName(), $product->getPrice(), $product->getType()->getId());
+            $stmt->bind_param('ssdi', $sku, $name, $price, $typeId);
             $stmt->execute();
             $product->setId($this->db->insert_id);
             return $product;
@@ -110,8 +116,9 @@ class ProductDAO
     public function delete(ProductAbstract $product): mixed
     {
         try {
+            $productId = $product->getId();
             $stmt = $this->db->prepare('DELETE FROM products WHERE id = ?');
-            $stmt->bind_param('i', $product->getId());
+            $stmt->bind_param('i', $productId);
             $stmt->execute();
             return true;
         } catch (\Exception $e) {

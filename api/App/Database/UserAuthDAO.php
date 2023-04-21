@@ -29,8 +29,12 @@ class UserAuthDAO
     public function create(UserAuth $authentication): mixed
     {
         try {
+            $email = $authentication->getEmail();
+            $password = $authentication->getPassword();
+            $token = $authentication->getToken();
+
             $stmt = $this->db->prepare('INSERT INTO users_authetications (email, password, token) VALUES (?, ?, ?)');
-            $stmt->bind_param('sss', $authentication->getEmail(), $authentication->getPassword(), $authentication->getToken());
+            $stmt->bind_param('sss', $email, $password, $token);
             $stmt->execute();
             return true;
         } catch (\Exception $e) {
