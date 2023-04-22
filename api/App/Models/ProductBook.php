@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Models\ProductAbstract;
 
-class ProductBook extends ProductAbstract
+class ProoductBook extends ProductAbstract
 {
     public function __construct(string $sku, string $name, string $price, Type $type, mixed $id = null)
     {

@@ -79,4 +79,9 @@ class ProductAttribute extends Model
         $dao = new ProductAttributeDAO(Model::getConnection());
         return $dao->getById($id);
     }
+
+    public function __toString()
+    {
+        return $this->attribute;
+    }
 }

@@ -59,4 +59,9 @@ class Attribute extends Model
         $dao = new AttributeDAO(Model::getConnection());
         return $dao->getAll();
     }
+
+    public function __toString()
+    {
+        return $this->description . $this->measurement_unit->getSymbol();
+    }
 }

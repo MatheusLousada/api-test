@@ -68,10 +68,6 @@ class ProductDAO
             $stmt->execute();
             $results = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
-            http_response_code(404);
-            echo json_encode($results);
-            exit;
-
             foreach ($results as $result) {
                 $type = Type::getById($result['type_id']);
                 $dinamycProduct = 'Product' . ucfirst(strtolower($type->getDescription()));
@@ -82,6 +78,7 @@ class ProductDAO
                     $attributes = array();
                     $productAttributes_id = $result['product_attributes_id'];
                     $product_attributes_ids = [];
+                    $productAttributes = [];
 
                     if (strpos($productAttributes_id, ',') !== false) {
                         $product_attributes_ids = explode(',', $productAttributes_id);
@@ -90,26 +87,19 @@ class ProductDAO
                     }
 
                     if (!empty($product_attributes_ids[0])) {
-                        foreach ($product_attributes_ids as $product_attributes_id) {
-
-                            $productAttribute = ProductAttribute::getById($product_attributes_id);
-
-                            $attributes[] = [
-                                'description' => $productAttribute->getAttribute()->getDescription(),
-                                'value' => $productAttribute->getValue(),
-                                'measurement_unit' => $productAttribute->getAttribute()->getMensurementUnit()->getSymbol()
-                            ];
-                        }
+                        foreach ($product_attributes_ids as $product_attributes_id)
+                            $productAttributes[] = ProductAttribute::getById($product_attributes_id);
                     }
 
                     $product = new $dinamycProduct($result['sku'], $result['name'], $result['price'], $type, $result['id']);
+                    $product->setAttributes($productAttributes);
                     $products[] = [
                         'id' => $product->getId(),
                         'sku' => $product->getSku(),
                         'name' => $product->getName(),
                         'price' => $product->getPrice(),
                         'type' => $product->getType()->getDescription(),
-                        'attributes' => $attributes
+                        'attributes' => $product->getAttributes()
                     ];
                 } else {
                     http_response_code(404);

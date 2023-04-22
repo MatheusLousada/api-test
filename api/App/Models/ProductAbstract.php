@@ -12,6 +12,7 @@ abstract class ProductAbstract extends Model
     private string $name;
     private float $price;
     private Type $type;
+    private array $attributes = [];
 
     public function __construct(string $sku, string $name, string $price, Type $type, mixed $id)
     {
@@ -70,6 +71,16 @@ abstract class ProductAbstract extends Model
     public function setType(Type $type): void
     {
         $this->type = $type;
+    }
+
+    public function getAttributes(): string
+    {
+        return implode(", ", $this->attributes);
+    }
+
+    public function setAttributes(array $attributes): void
+    {
+        $this->attributes = $attributes;
     }
 
     public static function getById(int $id): Product
