@@ -56,9 +56,9 @@ class ProductDAO
                     products.name,
                     products.price,
                     products.type_id,
-                    GROUP_CONCAT(product_attributes.id) AS product_attributes_id
+                    GROUP_CONCAT(IFNULL(product_attributes.id, "")) AS product_attributes_id
                 FROM products
-                LEFT JOIN product_attributes ON 
+                INNER JOIN product_attributes ON 
                     product_attributes.product_sku = products.sku
                 GROUP BY 
                     products.id, products.sku, products.name, products.price, products.type_id
@@ -68,6 +68,7 @@ class ProductDAO
             $stmt->execute();
             $results = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
+            http_response_code(404);
             echo json_encode($results);
             exit;
 
@@ -79,13 +80,13 @@ class ProductDAO
                     $dinamycProduct = "App\Models\\" . $dinamycProduct;
 
                     $attributes = array();
-                    $productAttribute_id = $result['product_attributes_id'];
+                    $productAttributes_id = $result['product_attributes_id'];
                     $product_attributes_ids = [];
 
-                    if (strpos($productAttribute_id, ',') !== false) {
-                        $product_attributes_ids = explode(',', $productAttribute_id);
+                    if (strpos($productAttributes_id, ',') !== false) {
+                        $product_attributes_ids = explode(',', $productAttributes_id);
                     } else {
-                        $product_attributes_ids[0] = $productAttribute_id;
+                        $product_attributes_ids = [$productAttributes_id];
                     }
 
                     if (!empty($product_attributes_ids[0])) {
