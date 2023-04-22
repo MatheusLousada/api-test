@@ -78,7 +78,6 @@ class ProductDAO
                     $attributes = array();
                     $productAttributes_id = $result['product_attributes_id'];
                     $product_attributes_ids = [];
-                    $productAttributes = [];
 
                     if (strpos($productAttributes_id, ',') !== false) {
                         $product_attributes_ids = explode(',', $productAttributes_id);
@@ -89,7 +88,7 @@ class ProductDAO
                     if (!empty($product_attributes_ids[0])) {
                         foreach ($product_attributes_ids as $product_attributes_id) {
 
-                            $productAttributes[] = ProductAttribute::getById($product_attributes_id);
+                            $productAttribute = ProductAttribute::getById($product_attributes_id);
 
                             $attributes[] = [
                                 'description' => $productAttribute->getAttribute()->getDescription(),
