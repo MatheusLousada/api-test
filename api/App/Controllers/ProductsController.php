@@ -36,10 +36,6 @@ class ProductsController
         $this->product = new Product($sku, $name, $price, $type);
         $this->dinamycProduct = 'Product' . ucfirst(strtolower($this->product->getType()->getDescription()));
 
-        http_response_code(200);
-        echo json_encode(["dinamyc" => $this->dinamycProduct, "teste" => $this->product->getType()->getDescription()]);
-        exit;
-
         if (file_exists("App/Models/" .  $this->dinamycProduct . ".php")) {
 
             $this->db->setAutoCommit(false);
