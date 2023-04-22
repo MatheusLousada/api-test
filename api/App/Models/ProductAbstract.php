@@ -73,16 +73,6 @@ abstract class ProductAbstract extends Model
         $this->type = $type;
     }
 
-    public function getAttributes(): string
-    {
-        return implode(", ", $this->attributes);
-    }
-
-    public function setAttributes(array $attributes): void
-    {
-        $this->attributes = $attributes;
-    }
-
     public static function getById(int $id): Product
     {
         $dao = new ProductDAO(Model::getConnection());
