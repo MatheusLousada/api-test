@@ -78,11 +78,19 @@ class ProductDAO
                     $productAttribute_id = $result['product_attributes_id'];
                     $product_attributes_ids = [];
 
+                    http_response_code(200);
+
                     if (strpos($productAttribute_id, ',') !== false) {
+                        echo json_encode(["msg" => "aqui1"]);
                         $product_attributes_ids = explode(',', $productAttribute_id);
                     } else {
+                        echo json_encode(["msg" => "aqui2"]);
                         $product_attributes_ids[0] = $productAttribute_id;
                     }
+
+                    echo json_encode(["productAttribute_id" => $productAttribute_id]);
+                    echo json_encode(["msg" => "aqui2"]);
+                    exit;
 
                     if (!empty($product_attributes_ids[0])) {
                         foreach ($product_attributes_ids as $product_attributes_id) {
