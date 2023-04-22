@@ -76,7 +76,12 @@ class ProductDAO
 
                     $attributes = array();
                     $productAttribute_id = $result['product_attributes_id'];
-                    $product_attributes_ids = strpos($productAttribute_id, ',') !== false ? explode(',', $productAttribute_id) : $productAttribute_id;
+                    if (strpos($productAttribute_id, ',') !== false) {
+                        $product_attributes_ids = explode(',', $productAttribute_id);
+                    } else {
+                        $product_attributes_ids[0] = $productAttribute_id;
+                    }
+
                     if (!empty($product_attributes_ids[0])) {
                         foreach ($product_attributes_ids as $product_attributes_id) {
 
