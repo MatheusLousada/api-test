@@ -76,6 +76,12 @@ class ProductDAO
 
                     $attributes = array();
                     $productAttribute_id = $result['product_attributes_id'];
+                    $product_attributes_ids = [];
+
+                    http_response_code(200);
+                    echo json_encode(["product_attributes_id" => $result['product_attributes_id']]);
+                    exit;
+
                     if (strpos($productAttribute_id, ',') !== false) {
                         $product_attributes_ids = explode(',', $productAttribute_id);
                     } else {
