@@ -85,27 +85,21 @@ class ProductDAO
                         $product_attributes_ids = [$productAttributes_id];
                     }
 
+                    $productAttributes  = [];
                     if (!empty($product_attributes_ids[0])) {
-                        foreach ($product_attributes_ids as $product_attributes_id) {
-
-                            $productAttribute = ProductAttribute::getById($product_attributes_id);
-
-                            $attributes[] = [
-                                'description' => $productAttribute->getAttribute()->getDescription(),
-                                'value' => $productAttribute->getValue(),
-                                'measurement_unit' => $productAttribute->getAttribute()->getMensurementUnit()->getSymbol()
-                            ];
-                        }
+                        foreach ($product_attributes_ids as $product_attributes_id)
+                            $productAttributes[] = ProductAttribute::getById($product_attributes_id);
                     }
 
                     $product = new $dinamycProduct($result['sku'], $result['name'], $result['price'], $type, $result['id']);
+                    $product->setAttributes();
                     $products[] = [
                         'id' => $product->getId(),
                         'sku' => $product->getSku(),
                         'name' => $product->getName(),
                         'price' => $product->getPrice(),
                         'type' => $product->getType()->getDescription(),
-                        'attributes' => $attributes
+                        'attributes' => $product->getAttributes($productAttributes)
                     ];
                 } else {
                     http_response_code(404);

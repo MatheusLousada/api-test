@@ -10,4 +10,20 @@ class ProductFurniture extends ProductAbstract
     {
         parent::__construct($sku, $name, $price, $type, $id);
     }
+
+    public function getAttributes(): array
+    {
+        $valuesArray = [];
+        foreach ($this->productAttributes as $productAttribute)
+            $valuesArray[] = $productAttribute->getValue();
+
+        $values = implode("X", $valuesArray);
+        $attributes[] = [
+            'description' => "Dimensions",
+            'value' => $values,
+            'measurement_unit' => $this->productAttributes[0]->getAttribute()->getMensurementUnit()->getSymbol()
+        ];
+
+        return $attributes;
+    }
 }
