@@ -92,14 +92,14 @@ class ProductDAO
                     }
 
                     $product = new $dinamycProduct($result['sku'], $result['name'], $result['price'], $type, $result['id']);
-                    $product->setAttributes();
+                    $product->setAttributes($productAttributes);
                     $products[] = [
                         'id' => $product->getId(),
                         'sku' => $product->getSku(),
                         'name' => $product->getName(),
                         'price' => $product->getPrice(),
                         'type' => $product->getType()->getDescription(),
-                        'attributes' => $product->getAttributes($productAttributes)
+                        'attributes' => $product->getAttributes()
                     ];
                 } else {
                     http_response_code(404);
