@@ -75,7 +75,8 @@ class ProductDAO
                     $dinamycProduct = "App\Models\\" . $dinamycProduct;
 
                     $attributes = array();
-                    $product_attributes_ids = strpos($string, ',') !== false ? explode(',', $result['product_attributes_id']) : $result['product_attributes_id'];
+                    $productAttribute_id = $result['product_attributes_id'];
+                    $product_attributes_ids = strpos($productAttribute_id, ',') !== false ? explode(',', $productAttribute_id) : $productAttribute_id;
                     if (!empty($product_attributes_ids[0])) {
                         foreach ($product_attributes_ids as $product_attributes_id) {
 
