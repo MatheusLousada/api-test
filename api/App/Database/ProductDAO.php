@@ -79,7 +79,7 @@ class ProductDAO
                     $product_attributes_ids = [];
 
                     http_response_code(200);
-                    echo json_encode(["product_attributes_id" => $result['product_attributes_id']]);
+                    echo json_encode(["product_attributes_id" => $result['product_attributes_id'], "typeof", gettype($result['product_attributes_id'])]);
                     exit;
 
                     if (strpos($productAttribute_id, ',') !== false) {
