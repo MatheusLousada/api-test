@@ -72,17 +72,19 @@ class ProductsController
 
     public function delete($request)
     {
+        $this->db->setAutoCommit(false);
+        $this->initConnection();
 
         $this->request = $request;
         $body = $this->request["body"];
-        foreach ($body as $key => $value) {
-            echo json_encode(['key' => $key], JSON_UNESCAPED_UNICODE);
-            echo json_encode(['value' => $value], JSON_UNESCAPED_UNICODE);
+        foreach ($body as $productSku) {
+            $product = Product::getBySku($productSku);
+            $product->delete();
         }
 
-        // $product = Product::getById($request['id']);
-        // $deleted = $product->delete();
-        // echo json_encode(['response' => gettype($body)], JSON_UNESCAPED_UNICODE);
+        $this->closeConnection();
+
+        echo json_encode(['response' => 'Products deleteds'], JSON_UNESCAPED_UNICODE);
         exit;
     }
 
