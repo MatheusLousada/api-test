@@ -72,9 +72,13 @@ class ProductsController
 
     public function delete($request)
     {
-        $product = Product::getById($request['id']);
-        $deleted = $product->delete();
-        echo json_encode(['response' => $deleted], JSON_UNESCAPED_UNICODE);
+
+        $this->request = $request;
+        $body = $this->request["body"];
+
+        // $product = Product::getById($request['id']);
+        // $deleted = $product->delete();
+        echo json_encode(['response' => $body], JSON_UNESCAPED_UNICODE);
         exit;
     }
 

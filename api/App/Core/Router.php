@@ -60,7 +60,7 @@ class Router
         $this->route['verb'] = 'DELETE';
         $this->route['method'] = 'delete';
         $context = explode('/', $this->request['uri']);
-        $this->request['id'] = end($context);
+        // $this->request['id'] = end($context);
     }
 
     private function auth(): mixed
