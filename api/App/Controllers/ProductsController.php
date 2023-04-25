@@ -74,11 +74,11 @@ class ProductsController
     {
 
         $this->request = $request;
-        $body = json_decode($this->request["body"]);
+        $body = $this->request["body"];
 
         // $product = Product::getById($request['id']);
         // $deleted = $product->delete();
-        echo json_encode(['response' => gettype($body), "Achoarray" => $body], JSON_UNESCAPED_UNICODE);
+        echo json_encode(['response' => gettype($body)], JSON_UNESCAPED_UNICODE);
         exit;
     }
 
