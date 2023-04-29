@@ -65,6 +65,10 @@ class TypeDAO
             );
             $stmt->execute();
             $results = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+            echo json_encode($results, JSON_UNESCAPED_UNICODE);
+            exit;
+
             $types = array();
             foreach ($results as $result) {
                 $type = new Type($result['id'], $result['description'], $result['attributes']);
