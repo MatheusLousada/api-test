@@ -42,9 +42,9 @@ class Type extends Model
         return $dao->getById($id);
     }
 
-    public static function getAllWithAttributes(): array
+    public static function getAll(): array
     {
         $dao = new TypeDAO(Model::getConnection());
-        return $dao->getAllWithAttributes();
+        return $dao->getAll();
     }
 }

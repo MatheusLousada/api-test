@@ -14,7 +14,7 @@ class TypesController
 
     public function index()
     {
-        echo json_encode(Type::getAllWithAttributes(), JSON_UNESCAPED_UNICODE);
+        echo json_encode(Type::getAll(), JSON_UNESCAPED_UNICODE);
         exit;
     }
 }
