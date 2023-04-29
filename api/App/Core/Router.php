@@ -42,19 +42,9 @@ class Router
 
     private function get(): void
     {
-        $parts = explode('/', $this->request['uri']);
-        echo json_encode(["parts" => $parts]);
-        exit;
-        // if ($parts[2] === 'products' && isset($parts[3]) && $parts[3] === 'getAllAttributes') {
-        //     // chama o método getAllAttributes
-        // } elseif ($parts[2] === 'products') {
-        //     // chama o método index
-        // } else {
-        //     // exibe um erro informando que a rota não foi encontrada
-        // }
-
         $this->route['verb'] = 'GET';
-        $this->route['method'] = 'index';
+        $parts = explode('/', $this->request['uri']);
+        $this->route['method'] = count($parts) == 2 ? "index" : $parts[2];
     }
 
     private function post(): void

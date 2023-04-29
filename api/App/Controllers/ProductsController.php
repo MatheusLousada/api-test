@@ -76,12 +76,6 @@ class ProductsController
         exit;
     }
 
-    public function getAllAttributes()
-    {
-        echo json_encode(Product::getAllAttributes(), JSON_UNESCAPED_UNICODE);
-        exit;
-    }
-
     private function saveProduct()
     {
         require_once "App/Models/" . $this->dinamycProduct . ".php";

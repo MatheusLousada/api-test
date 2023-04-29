@@ -73,16 +73,6 @@ abstract class ProductAbstract extends Model
         $this->type = $type;
     }
 
-    public function getAllAttributes(): array
-    {
-        $attributes[] = [
-            'id' => $this->productAttributes[0]->getAttribute()->getId(),
-            'description' => $this->productAttributes[0]->getAttribute()->getDescription(),
-        ];
-
-        return $attributes;
-    }
-
     public function getAttributes(): array
     {
         $attributes[] = [
