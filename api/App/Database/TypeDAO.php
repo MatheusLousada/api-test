@@ -53,7 +53,7 @@ class TypeDAO
                 'SELECT 
                     types.id, 
                     types.description, 
-                    GROUP_CONCAT(attributes.name SEPARATOR ", ") AS attributes 
+                    GROUP_CONCAT(attributes.id SEPARATOR ", ") AS attributes 
                 FROM 
                     types 
                 INNER JOIN 
@@ -61,7 +61,7 @@ class TypeDAO
                 INNER JOIN 
                     attributes ON type_attributes.attribute_id = attributes.id 
                 GROUP BY 
-                    types.id'
+                    type_attributes.type_id'
             );
             $stmt->execute();
             $results = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
