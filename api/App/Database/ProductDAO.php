@@ -51,18 +51,22 @@ class ProductDAO
             $products = array();
             $stmt = $this->db->prepare(
                 'SELECT 
-                    products.id,
+                   products.id,
                     products.sku,
                     products.name,
                     products.price,
                     products.type_id,
-                    GROUP_CONCAT(IFNULL(product_attributes.id, "")) AS product_attributes_id
+                    GROUP_CONCAT(IFNULL(attributes.name, "")) AS attributes
                 FROM products
                 INNER JOIN product_attributes ON 
                     product_attributes.product_sku = products.sku
+                INNER JOIN type_attributes ON 
+                    type_attributes.type_id = products.type_id AND 
+                    type_attributes.attribute_id = product_attributes.attribute_id
+                INNER JOIN attributes ON 
+                    attributes.id = type_attributes.attribute_id
                 GROUP BY 
-                    products.id, products.sku, products.name, products.price, products.type_id
-            '
+                    products.id, products.sku, products.name, products.price, products.type_id'
             );
 
             $stmt->execute();
