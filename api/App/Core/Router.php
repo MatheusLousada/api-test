@@ -59,8 +59,6 @@ class Router
     {
         $this->route['verb'] = 'DELETE';
         $this->route['method'] = 'delete';
-        $context = explode('/', $this->request['uri']);
-        // $this->request['id'] = end($context);
     }
 
     private function auth(): mixed
@@ -93,6 +91,10 @@ class Router
 
     private function validateBody(): void
     {
+        http_response_code(200);
+        echo json_encode(["body" => $this->request['body']]);
+        exit;
+
         if (empty($this->request['body']) || $this->request['body'] == NULL) {
             http_response_code(400);
             echo json_encode(["error" => "Invalid request body"]);
