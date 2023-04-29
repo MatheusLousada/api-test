@@ -52,7 +52,7 @@ class TypeDAO
             $stmt = $this->db->prepare(
                 'SELECT 
                     types.id, 
-                    types.name, 
+                    types.description, 
                     GROUP_CONCAT(attributes.name SEPARATOR ", ") AS attributes 
                 FROM 
                     types 
@@ -67,7 +67,7 @@ class TypeDAO
             $results = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             $types = array();
             foreach ($results as $result) {
-                $type = new Type($result['id'], $result['description']);
+                $type = new Type($result['id'], $result['description'], $result['attributes']);
                 $types[] = [
                     'id' => $type->getId(),
                     'description' => $type->getDescription()
