@@ -58,18 +58,6 @@ class ProductsController
         }
     }
 
-    private function initConnection()
-    {
-        $this->con = $this->db->getConnection();
-        $this->con->begin_transaction();
-    }
-
-    private function closeConnection()
-    {
-        $this->con->commit();
-        $this->con->close();
-    }
-
     public function delete($request)
     {
         $this->db->setAutoCommit(false);
@@ -85,6 +73,12 @@ class ProductsController
         $this->closeConnection();
 
         echo json_encode(['response' => 'Products deleteds'], JSON_UNESCAPED_UNICODE);
+        exit;
+    }
+
+    public function getAllAttributes()
+    {
+        echo json_encode(Product::getAllAttributes(), JSON_UNESCAPED_UNICODE);
         exit;
     }
 
@@ -116,5 +110,17 @@ class ProductsController
             echo json_encode(['error' => $errorMessage], JSON_UNESCAPED_UNICODE);
             exit;
         }
+    }
+
+    private function initConnection()
+    {
+        $this->con = $this->db->getConnection();
+        $this->con->begin_transaction();
+    }
+
+    private function closeConnection()
+    {
+        $this->con->commit();
+        $this->con->close();
     }
 }

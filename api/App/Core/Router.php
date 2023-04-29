@@ -16,12 +16,9 @@ class Router
         $httpRequest = new HttpRequest();
         $this->request = $httpRequest->getRequest();
         $context = explode('/', $this->request['uri']);
-        $context = is_numeric(end($context)) ? end(array_slice($context, -2, 1)) : end($context);
-        $this->context = $context;
-        $this->route = [
-            'path' => '/' . $this->context,
-            'controller' => ucfirst($this->context) . 'Controller'
-        ];
+        $this->context = $context[1];
+        $this->route = ['controller' => ucfirst($this->context) . 'Controller'];
+        // 'path' => '/' . $this->context,
     }
 
     public function handleRequest()
@@ -45,6 +42,17 @@ class Router
 
     private function get(): void
     {
+        $parts = explode('/', $this->request['uri']);
+        echo json_encode(["parts" => $parts]);
+        exit;
+        // if ($parts[2] === 'products' && isset($parts[3]) && $parts[3] === 'getAllAttributes') {
+        //     // chama o método getAllAttributes
+        // } elseif ($parts[2] === 'products') {
+        //     // chama o método index
+        // } else {
+        //     // exibe um erro informando que a rota não foi encontrada
+        // }
+
         $this->route['verb'] = 'GET';
         $this->route['method'] = 'index';
     }
