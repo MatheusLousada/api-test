@@ -45,4 +45,37 @@ class TypeDAO
             return $e->getMessage();
         }
     }
+
+    public function getAllWithAttributes(): array
+    {
+        try {
+            $stmt = $this->db->prepare(
+                'SELECT 
+                    types.id, 
+                    types.name, 
+                    GROUP_CONCAT(attributes.name SEPARATOR ", ") AS attributes 
+                FROM 
+                    types 
+                INNER JOIN 
+                    type_attributes ON types.id = type_attributes.type_id 
+                INNER JOIN 
+                    attributes ON type_attributes.attribute_id = attributes.id 
+                GROUP BY 
+                    types.id'
+            );
+            $stmt->execute();
+            $results = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+            $types = array();
+            foreach ($results as $result) {
+                $type = new Type($result['id'], $result['description']);
+                $types[] = [
+                    'id' => $type->getId(),
+                    'description' => $type->getDescription()
+                ];
+            }
+            return $types;
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+    }
 }

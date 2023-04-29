@@ -60,9 +60,11 @@ class ProductDAO
                 FROM products
                 INNER JOIN product_attributes ON 
                     product_attributes.product_sku = products.sku
+                INNER JOIN type_attributes ON 
+                    type_attributes.type_id = products.type_id AND 
+                    type_attributes.attribute_id = product_attributes.attribute_id
                 GROUP BY 
-                    products.id, products.sku, products.name, products.price, products.type_id
-            '
+                    products.id, products.sku, products.name, products.price, products.type_id'
             );
 
             $stmt->execute();
@@ -75,7 +77,6 @@ class ProductDAO
                     require_once "App/Models/" . $dinamycProduct . ".php";
                     $dinamycProduct = "App\Models\\" . $dinamycProduct;
 
-                    $attributes = array();
                     $productAttributes_id = $result['product_attributes_id'];
                     $product_attributes_ids = [];
 
