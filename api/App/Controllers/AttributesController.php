@@ -3,7 +3,7 @@
 use App\Models\Attribute;
 use App\Database\DB;
 
-class AttrbutesController
+class AttributesController
 {
     private DB $db;
 
