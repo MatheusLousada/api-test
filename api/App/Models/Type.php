@@ -41,4 +41,10 @@ class Type extends Model
         $dao = new TypeDAO(Model::getConnection());
         return $dao->getById($id);
     }
+
+    public static function getAll(): array
+    {
+        $dao = new TypeDAO(Model::getConnection());
+        return $dao->getAll();
+    }
 }

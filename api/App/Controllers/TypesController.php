@@ -1,9 +1,9 @@
 <?php
 
-use App\Models\Attribute;
+use App\Models\Type;
 use App\Database\DB;
 
-class AttributesController
+class TypesController
 {
     private DB $db;
 
@@ -14,7 +14,7 @@ class AttributesController
 
     public function index()
     {
-        echo json_encode(Attribute::getAll(), JSON_UNESCAPED_UNICODE);
+        echo json_encode(Type::getAll(), JSON_UNESCAPED_UNICODE);
         exit;
     }
 }
