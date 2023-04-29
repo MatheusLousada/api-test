@@ -56,7 +56,7 @@ class ProductDAO
                     products.name,
                     products.price,
                     products.type_id,
-                    GROUP_CONCAT(IFNULL(attributes.name, "")) AS attributes
+                    GROUP_CONCAT(IFNULL(product_attributes.id, "")) AS attributes
                 FROM products
                 INNER JOIN product_attributes ON 
                     product_attributes.product_sku = products.sku
