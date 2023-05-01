@@ -62,6 +62,8 @@ class ProductDAO
                     product_attributes.product_sku = products.sku
                 GROUP BY 
                     products.id, products.sku, products.name, products.price, products.type_id
+                ORDER BY 
+                    products.id DESC
             '
             );
 
