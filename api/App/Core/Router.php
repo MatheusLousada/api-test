@@ -113,12 +113,12 @@ class Router
 
     public function run(): void
     {
-        // $responseAuth = $this->auth();
-        // if (!$responseAuth['success']) {
-        //     http_response_code($responseAuth['status']);
-        //     echo json_encode(["error" => 'Unauthorized. ' . $responseAuth['msg']]);
-        //     exit;
-        // }
+        $responseAuth = $this->auth();
+        if (!$responseAuth['success']) {
+            http_response_code($responseAuth['status']);
+            echo json_encode(["error" => 'Unauthorized. ' . $responseAuth['msg']]);
+            exit;
+        }
 
         $this->handleRequest();
 
