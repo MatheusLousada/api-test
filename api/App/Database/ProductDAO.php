@@ -117,7 +117,6 @@ class ProductDAO
     public function save(ProductAbstract $product): mixed
     {
         try {
-
             $sku = $product->getSku();
             $name = $product->getName();
             $price = $product->getPrice();
